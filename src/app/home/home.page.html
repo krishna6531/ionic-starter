@@ -1,20 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>Sample App with ion-datetime component.</ion-title>
     </ion-toolbar>
   </ion-header>
+<ion-content>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <form [formGroup]="dateForm" (ngSubmit)="submit()">
+    <ion-item id="open-modal2">
+      <ion-label>Select a date from future</ion-label>
+      <ion-input label="Select a date from future" labelPlacement="stacked" placeholder="Select Date" [value]="this.dateForm.value.date | date"></ion-input>
+    </ion-item>
+    <ion-modal trigger="open-modal2" [cssClass]="'bottom-end'">
+        <ng-template>
+            <ion-datetime [showDefaultButtons]="true" formControlName="date" presentation="date" [min]="minDate" [max]="maxDate"
+            (ionChange)="getDate($event)"  ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+      <div class= "center">
+    <ion-button type="submit">submit</ion-button>
   </div>
+  </form>
+
+  <div class="border">
+      <ul>
+        <li><b>Today :</b> <i>{{today | date}}</i></li>
+        <li><b>Yesterday :</b> <i>{{yesterday | date}}</i></li>
+        <li><b>10 days past selected date :</b> <i>{{tenDaysPastSelected | date}}</i></li>
+        <li><b>1 year past selected date :</b> <i>{{oneYearPastSelected | date}}</i></li>
+      </ul>
+  </div>
+
 </ion-content>
+
+
