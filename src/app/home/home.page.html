@@ -21,7 +21,7 @@
   </div>
   </form>
 
-  <div class="border">
+  <div *ngIf = "isSubmitted" class="border">
       <ul>
         <li><b>Today :</b> <i>{{today | date}}</i></li>
         <li><b>Yesterday :</b> <i>{{yesterday | date}}</i></li>

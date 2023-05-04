@@ -14,7 +14,6 @@ yesterday: string;
 today: string;
 tenDaysPastSelected: string;
 oneYearPastSelected: string;
-selectedDate:Date;
 minDate: string
 maxDate: string
 isSubmitted = false
@@ -29,15 +28,20 @@ isSubmitted = false
     this.dateForm.value.date  = new Date((event.target as HTMLInputElement).value).toISOString();
   }
 
+  selectedPastDate(value: Date, pastDays:number) {
+  return new Date (value.setDate(value.getDate() - pastDays)).toISOString();
+  }
+
 
   submit() {
-  this.isSubmitted = true;
+  if (this.dateForm.value.date) {
+    this.isSubmitted = true;
+  }
   const date = new Date();
   this.today =  date.toISOString();
-  this.yesterday = new Date (date.setDate(date.getDate() - 1)).toISOString();
-  this.selectedDate = new Date(this.dateForm.value.date);
-  this.tenDaysPastSelected = new Date (this.selectedDate.setDate(this.selectedDate.getDate() - 10)).toISOString();
-  this.oneYearPastSelected = new Date (this.selectedDate.setDate(this.selectedDate.getDate() - 365)).toISOString();
+  this.yesterday = new Date (date.setDate(date.getDate() - 1)).toISOString();  
+  this.tenDaysPastSelected = this.selectedPastDate(new Date(this.dateForm.value.date), 10);
+  this.oneYearPastSelected = this.selectedPastDate(new Date(this.dateForm.value.date), 365);
   this.minDate = this.today;
   this.maxDate = (date.getFullYear() + 5).toString();
   }
